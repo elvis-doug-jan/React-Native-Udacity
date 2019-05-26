@@ -1,30 +1,26 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
+import AddEntry from './components/AddEntry'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 
 export default class App extends React.Component {
-
-  componentDidMount() {
-    console.log('Ola')
-    debugger
-    console.log('rksljfklsdjfkljsdklfjdslk')
-  }
-
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Meu incrível aplicativo super merda</Text>
-        <Text>Meu incrível aplicativo super merda</Text>
-        <Text>Meu incrível aplicativo super merda</Text>
-      </View>
-    );
+      <Provider store={createStore(reducer)}>
+        <View style={styles.container}>
+          <AddEntry />
+        </View>
+      </Provider>
+    )
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
-});
+})
