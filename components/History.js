@@ -8,13 +8,13 @@ import UdaciFitnessCalendar from 'udacifitness-calendar'
 import { white } from '../utils/colors'
 import DateHeader from './DateHeader'
 import MetricCard from './MetricCard'
-import { AppLoading} from 'expo'
+import { AppLoading } from 'expo'
 
 class History extends Component {
   state = {
     ready: false,
   }
-  componentDidMount () {
+  componentDidMount() {
     const { dispatch } = this.props
 
     fetchCalendarResults()
@@ -26,28 +26,31 @@ class History extends Component {
           }))
         }
       })
-      .then(() => this.setState(() => ({ready: true})))
+      .then(() => this.setState(() => ({ ready: true })))
   }
   renderItem = ({ today, ...metrics }, formattedDate, key) => (
     <View style={styles.item}>
       {today
         ? <View>
-            <DateHeader date={formattedDate}/>
-            <Text style={styles.noDataText}>
-              {today}
-            </Text>
-          </View>
+          <DateHeader date={formattedDate} />
+          <Text style={styles.noDataText}>
+            {today}
+          </Text>
+        </View>
         : <TouchableOpacity
-            onPress={() => console.log('Pressed!')}
-          >
-            <MetricCard date={formattedDate} metrics={metrics} />
-          </TouchableOpacity>}
+          onPress={() => this.props.navigation.navigate(
+            'EntryDetail',
+            { entryId: key }
+          )}
+        >
+          <MetricCard date={formattedDate} metrics={metrics} />
+        </TouchableOpacity>}
     </View>
   )
   renderEmptyDate(formattedDate) {
     return (
       <View style={styles.item}>
-        <DateHeader date={formattedDate}/>
+        <DateHeader date={formattedDate} />
         <Text style={styles.noDataText}>
           You didn't log any data on this day.
         </Text>
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
 })
 
 
-function mapStateToProps (entries) {
+function mapStateToProps(entries) {
   return {
     entries
   }
